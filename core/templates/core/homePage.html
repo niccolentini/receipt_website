@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block content %}
+    <div style="display: flex; justify-content: center">
+            <div class="main-cont__text border-1 text-center">
+                <div class="row" style="display:flex; justify-content: space-around"><h1>Welcome to Student Recipes!</h1></div>
+                <div class="row" style="display:flex; justify-content: space-around">Student Recipes is a website where you can find recipes for students.</div>
+                <div class="row" style="display:flex; justify-content: space-around">Here you can find recipes for breakfast, lunch and dinner.</div>
+                <div class="row" style="display:flex; justify-content: space-around">Enjoy!</div>
+            </div>
+    </div>
+<hr>
+    <div class="categories-counter pt-3">
+    <div class="row">
+        {% for category in categorys %}
+
+            <div class="col bg-secondary-subtle">
+            <a href="#" class="text-dark" style="text-decoration: dashed">
+                <h4>{{ category.name }}s: {{ category.recipe_set.count }} </h4>
+            </a>
+            </div>
+
+        {% endfor %}
+    </div>
+    </div>
+<hr>
+    <div class="container pt-4">
+    <div class="row">
+        {% for recipe in recipes %}
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <a href="{% url 'recipe:detail' recipe.id %}">
+                        <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h4 class="card-title">{{ recipe.name }}</h4>
+
+                      <h5 class="card-subtitle opacity-50">{{ recipe.category }}</h5>
+                      <p class="card-text">{{ recipe.description }}</p>
+                      <p class="card-footer"><b>{{ recipe.created_by}}</b>'s recipe!</p>
+                  </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+
+{% endblock %}
+
+
