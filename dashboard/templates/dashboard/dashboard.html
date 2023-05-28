@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+
+{% block content %}
+    <div class="p-3">
+        <h1>  <i><b>{{ request.user.username }}'s Dashboard </b></i></h1>
+    <div class="row pt-1">
+  <h4 class="text-center py-2 bg-secondary-subtle">Your recipes</h4>
+  {% regroup recipes by category as recipe_groups %}
+
+  {% for group in recipe_groups %}
+    <div class="col">
+      <h4>{{ group.grouper }}s:</h4>
+
+      {% for recipe in group.list %}
+        <div class="card" style="width: 14rem;">
+          <a href="{% url 'recipe:detail' recipe.id %}" style="text-decoration: none">
+            <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h4 class="card-title text-dark">{{ recipe.name }}</h4>
+              <h5 class="card-subtitle opacity-50 text-dark">{{ recipe.category }}</h5>
+                <p class="card-text text-dark pt-1">{{ recipe.description }}</p>
+              <p class="card-footer text-dark"><b>{{ recipe.created_by }}</b>'s recipe!</p>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+
+</div>
+
+
+    </div>
+{% endblock %}
+
+

@@ -9,8 +9,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
-
-
     <title> {% block title %}{% endblock %}| Student Recipes</title>
 </head>
 
@@ -19,6 +17,13 @@
     <nav class="navbar navbar-dark bg-info">
         <div class="container-fluid">
             <a class="navbar-brand px-2" style="font-family: 'Lao MN'; font-size: 2rem" href="{% url 'core:homePage' %}">Student Recipes</a>
+            <div class="items-navbar" style="display:flex; flex-direction: row">
+
+            <a href="{% url 'recipe:searchRecipe' %}" class="search-btn py-1">
+                        <i class="bi bi-search text-light" style="font-size: 1.5rem"></i>
+            </a>
+
+
 
             {% if request.user.is_authenticated %}
                 <div class="buttons_logged" style="display: flex; flex-direction: row">
@@ -30,8 +35,8 @@
                         <button type="button" href="{% url 'recipe:addRecipe' %}" class="btn btn-success rounded-5 px-4">New Recipe</button>
                     </a>
 
-                    <a href="#" class="profile-btn" style="text-decoration: none">
-                        <button type="button" class="btn btn-light rounded-5 px-4">Profile</button>
+                    <a href="{% url 'dashboard:dashboardPage' %}" class="profile-btn" style="text-decoration: none">
+                        <button type="button" class="btn btn-light rounded-5 px-4">Dashboard</button>
                     </a>
 
                     <a href="#" class="logout-btn px-2">
@@ -49,20 +54,27 @@
                     <a class="register-btn px-2" href="{% url 'core:signupPage' %}">
                         <button type="button" class="btn btn-light rounded-5 px-4">Register</button>
                     </a>
+            {% endif %}
                     <button class="navbar-toggler px-3 border-2 border-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="navigation switch">
                         <span class="navbar-toggler-icon border-light "></span>
                     </button>
                 </div>
-            {% endif %}
+            </div>
 
-            <div class="collapse navbar-collapse bg-info opacity-50" id="navbarNavAltMarkup">
+
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="{% url 'core:homePage' %}">Home</a>
+                    <a class="nav-link px-3 text-light" href="{% url 'core:homePage' %}">Home</a>
                     <hr>
-                    <a class="nav-link" href="{% url 'core:aboutPage' %}">About us</a>
+                    <a class="nav-link px-3 text-light" href="{% url 'core:aboutPage' %}">About us</a>
                     <hr>
-                    <a class="nav-link" href="#">Add recipe</a>
+
+                    <form method="get" action="{% url 'recipe:searchRecipe' %}" class="px-5" style="display: flex; flex-direction: row">
+                        <input name="query" class="form-control py-1 px-3" type="text" value="{{ query }}" placeholder="I want to eat...">
+                        <button class="bi bi-search btn btn-success rounded-5" type="submit"></button>
+                    </form>
+
                 </div>
             </div>
         </div>
