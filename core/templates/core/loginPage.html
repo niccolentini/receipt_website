@@ -1,0 +1,45 @@
+{% extends 'core/base.html'%}
+
+{% block title %}
+    Log-in
+{% endblock %}
+
+{% block content %}
+    <div class="px-3">
+
+    <h1 class="text-center pt-2">Log-in</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 bg-secondary-subtle rounded-3">
+            <form method="POST" action="." class="p-3">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    {{ form.username.errors }}
+                    <label for="id_username" class="form-label">Username</label> <br>
+                    {{ form.username }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.password.errors }}
+                    <label for="passowrd" class="form-label">Password</label> <br>
+                    {{ form.password }}
+                </div>
+
+
+                {% if form.errors or form.non_field_errors %}
+                    <div class="mb-3 p-4 bg-danger rounded-3">
+                        {% for field in form %}
+                            {{ field.errors }}
+                        {% endfor %}
+                    {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </form>
+        </div>
+
+    </div>
+    </div>
+{% endblock %}

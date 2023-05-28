@@ -29,6 +29,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+LOGIN_URL = 'loginPage'
+LOGIN_REDIRECT_URL = 'homePage'
+LOGOUT_REDIRECT_URL = 'homePage'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +46,7 @@ INSTALLED_APPS = [
     #'crispy_bootstrap5',
     'core',
     'recipe',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
