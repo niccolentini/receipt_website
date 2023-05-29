@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Category, Recipe
+from .models import Category, Recipe, LikeRecipe
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from .forms import newRecipeForm, editRecipeForm
@@ -67,4 +67,38 @@ def searchRecipe(request):
     return render(request, 'recipe/searchRecipe.html', {
         'recipes': recipes,
         'query': query,
+    })
+
+@login_required
+def likeRecipe(request, pk):
+    username = request.user.username
+    recipe_id = pk
+
+    recipe = Recipe.objects.get(id=recipe_id)
+
+    like_filter = LikeRecipe.objects.filter(recipe_id=recipe_id, username=username).first()
+
+    if not like_filter:
+        like = LikeRecipe.objects.create(recipe_id=recipe_id, username=username)
+        like.save()
+        recipe.n_of_likes += 1
+        recipe.save()
+        return redirect('/recipes/' + str(recipe_id) + '/')
+    else:
+        like_filter.delete()
+        recipe.n_of_likes -= 1
+        recipe.save()
+        return redirect('/recipes/' + str(recipe_id) + '/')
+
+
+@login_required
+def likedRecipes(request):
+    username = request.user.username
+    recipes = LikeRecipe.objects.filter(username=username)
+    liked_recipes = Recipe.objects.filter(id__in=recipes.values_list('recipe_id', flat=True))
+    all_recipes = Recipe.objects.exclude(id__in=liked_recipes.values_list('id', flat=True)).order_by('?')
+
+    return render(request, 'recipe/likedRecipes.html', {
+        'liked_recipes': liked_recipes,
+        'all_recipes': all_recipes,
     })

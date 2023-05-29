@@ -19,34 +19,41 @@
             <a class="navbar-brand px-2" style="font-family: 'Lao MN'; font-size: 2rem" href="{% url 'core:homePage' %}">Student Recipes</a>
             <div class="items-navbar" style="display:flex; flex-direction: row">
 
-            <a href="{% url 'recipe:searchRecipe' %}" class="search-btn py-1">
+            {% if request.user.is_authenticated %}
+                <i class="px-5 py-3 text-light">Hi {{ request.user.username }}!</i>
+            {% endif %}
+
+            <a href="{% url 'recipe:searchRecipe' %}" class="search-btn py-2 px-2">
                         <i class="bi bi-search text-light" style="font-size: 1.5rem"></i>
             </a>
 
-
-
             {% if request.user.is_authenticated %}
                 <div class="buttons_logged" style="display: flex; flex-direction: row">
-                    <a href="#" class="fav-btn px-3 pt-1">
-                        <i class="bi bi-suit-heart-fill text-danger" style="font-size: 1.5rem"></i>
+                    <a href="{% url 'recipe:likedRecipes' %}" class="fav-btn px-3 pt-1" style="text-decoration: none">
+                        <button type="button" href="#" class="btn btn-outline-danger border-2 text-light text-center">
+                           <div class="d-flex align-items-center justify-content-center">
+                                Your likes <i class="bi bi-suit-heart-fill text-light px-1" style="font-size: 1.5rem"></i>
+                            </div>
+                        </button>
                     </a>
 
-                    <a href="{% url 'recipe:addRecipe' %}" class="new-recipe-btn px-2">
+                    <a href="{% url 'recipe:addRecipe' %}" class="new-recipe-btn px-2 py-2">
                         <button type="button" href="{% url 'recipe:addRecipe' %}" class="btn btn-success rounded-5 px-4">New Recipe</button>
                     </a>
 
-                    <a href="{% url 'dashboard:dashboardPage' %}" class="profile-btn" style="text-decoration: none">
+                    <a href="{% url 'dashboard:dashboardPage' %}" class="profile-btn py-2" style="text-decoration: none">
                         <button type="button" class="btn btn-light rounded-5 px-4">Dashboard</button>
                     </a>
 
-                    <a href="#" class="logout-btn px-2">
-                        <button type="button" class="btn btn-light rounded-5 px-4">Logout</button>
-                    </a>
+                    <form action="{% url 'core:logout' %}" method="post" class="px-2 py-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-light rounded-5 px-4">Logout</button>
+                    </form>
 
                 </div>
 
             {% else %}
-                <div class="buttons">
+                <div class="buttons px-3" style="display: flex">
                     <a class="login-btn" href="{% url 'core:loginPage' %}">
                         <button type="button" class="btn btn-primary rounded-5 px-4">Login</button>
                     </a>

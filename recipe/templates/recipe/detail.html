@@ -33,9 +33,25 @@
         <p>{{ recipe.directions }}</p>
 
         <div class="favourites pt-5" style="display: flex; justify-content: flex-end;">
-            <a href="#" class="add-to-fav" title="Add to favourites">
-                <i class="bi bi-suit-heart text-danger" style="font-size: 2rem"></i>
+
+        {% if recipe.n_of_likes == 0 %}
+            <p class="px-3 py-2"><b> No likes yet :( </b></p>
+        {% elif recipe.n_of_likes == 1%}
+            <p class="px-3 py-2"><b>Liked by {{ recipe.n_of_likes }} student</b></p>
+        {% else %}
+            <p class="px-3 py-2"><b>Liked by {{ recipe.n_of_likes }} students</b></p>
+        {% endif %}
+
+
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'recipe:likeRecipe' recipe.id %}" class="add-to-fav" title="Add to favourites">
+                <i class="bi bi-suit-heart-fill text-danger" style="font-size: 2rem"></i>
             </a>
+        {% else %}
+            <a class="login-btn py-1" href="{% url 'core:loginPage' %}">
+                        <button type="button" class="btn btn-outline-primary rounded-5 px-4 ">Login to like the recipe</button>
+                    </a>
+        {% endif %}
             <a href="#" class="share-btn" title="Share">
                 <i class="bi bi-share px-3 text-dark" style="font-size: 2rem"></i>
             </a>
@@ -66,7 +82,7 @@
             {% for recipe in related_recipes %}
                 <div class="col">
                 <div class="card" style="width: 14rem;">
-                    <a href="{% url 'recipe:detail' recipe.id %}">
+                    <a href="{% url 'recipe:detail' recipe.id %}" style="text-decoration: none">
                         <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
                   <div class="card-body">
                       <h4 class="card-title text-dark">{{ recipe.name }}</h4>

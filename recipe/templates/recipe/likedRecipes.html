@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+    Favourite Recipes
+{% endblock %}
+
+{% block content %}
+    <div class="px-3">
+
+    <h2 class="py-2">{{ request.user.username }}'s favourite recipes:</h2>
+
+    <div class="row">
+        {% for recipe in liked_recipes %}
+            <div class="col py-1">
+                <div class="card" style="width: 18rem;">
+                    <a href="{% url 'recipe:detail' recipe.id %}" style="text-decoration: none">
+                        <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h4 class="card-title text-dark">{{ recipe.name }}</h4>
+
+                      <h5 class="card-subtitle opacity-50 text-dark">{{ recipe.category }}</h5>
+                      <p class="card-text text-dark">{{ recipe.description }}</p>
+                      <p class="card-footer text-dark"><b>{{ recipe.created_by}}</b>'s recipe!</p>
+                  </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <h4 class="text-center py-2 bg-secondary-subtle"> Other recipes you might like...</h4>
+
+    <div class="row">
+        {% for recipe in all_recipes %}
+            {% if forloop.counter <= 5 %}
+                <div class="col py-1">
+                    <div class="card" style="width: 15rem;">
+                        <a href="{% url 'recipe:detail' recipe.id %}" style="text-decoration: none">
+                            <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
+                      <div class="card-body">
+                          <h4 class="card-title text-dark">{{ recipe.name }}</h4>
+
+                          <h5 class="card-subtitle opacity-50 text-dark">{{ recipe.category }}</h5>
+                          <p class="card-text text-dark">{{ recipe.description }}</p>
+                          <p class="card-footer text-dark"><b>{{ recipe.created_by}}</b>'s recipe!</p>
+                      </div>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+
+
+    </div>
+
+{% endblock %}

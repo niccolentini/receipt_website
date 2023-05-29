@@ -17,11 +17,11 @@
     </div>
 <hr>
     <div class="categories-counter">
-    <div class="row px-2">
+    <div class="row">
         {% for category in categorys %}
 
             <div class="col py-2 bg-secondary-subtle">
-            <a href="#" class="text-dark" style="text-decoration: dashed">
+            <a href="{% url 'core:categoryRecipes' category.id %}" class="text-dark" style="text-decoration: none">
                 <h4>{{ category.name }}s: {{ category.recipe_set.count }} </h4>
             </a>
             </div>

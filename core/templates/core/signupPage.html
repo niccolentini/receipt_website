@@ -35,6 +35,16 @@
                     {{ form.password2 }}
                 </div>
 
+            <p> <b>Attention:</b>
+        <ul>
+                <li>The password must be <b>at least 8 characters long</b>.</li>
+                <li>The password must contain at least one <b>numeric character</b>.</li>
+                <li>The password must contain at least one <b>uppercase letter</b>.</li>
+                <li>The password must contain at least one <b>lowercase letter</b>.</li>
+                <li>The password <b>cannot be the same as the account's username</b>.</li>
+        </ul>
+        </p>
+
                 {% if form.errors or form.non_field_errors %}
                     <div class="mb-3 p-4 bg-danger rounded-3">
                         {% for field in form %}
