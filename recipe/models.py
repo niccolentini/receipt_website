@@ -23,6 +23,7 @@ class Recipe(models.Model):
     image = models.ImageField(upload_to='recipe_images', blank=True)
     created_by = models.ForeignKey(User, related_name='items', on_delete=models.CASCADE)
     n_of_likes = models.IntegerField(default=0)
+    difficulty = models.IntegerField(default=1)
 
     def __str__(self):
         return self.name

@@ -11,6 +11,7 @@ def detail(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     related_recipes = Recipe.objects.filter(category=recipe.category).exclude(pk=pk)[0:4]
     comments = Comment.objects.filter(recipe=recipe).order_by('-date')
+    allrecipes = Recipe.objects.all()
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -30,7 +31,8 @@ def detail(request, pk):
         'recipe': recipe,
         'related_recipes': related_recipes,
         'form': form,
-        'comments': comments
+        'comments': comments,
+        'allrecipes': allrecipes
     })
 
 
@@ -78,6 +80,7 @@ def editRecipe(request, pk):
 def searchRecipe(request):
     query = request.GET.get('query', '')
     recipes = Recipe.objects.all()
+    allrecipes = Recipe.objects.all()
 
     if query:
         recipes = Recipe.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
@@ -85,6 +88,7 @@ def searchRecipe(request):
     return render(request, 'recipe/searchRecipe.html', {
         'recipes': recipes,
         'query': query,
+        'allrecipes': allrecipes
     })
 
 @login_required
@@ -115,10 +119,12 @@ def likedRecipes(request):
     recipes = LikeRecipe.objects.filter(username=username)
     liked_recipes = Recipe.objects.filter(id__in=recipes.values_list('recipe_id', flat=True))
     all_recipes = Recipe.objects.exclude(id__in=liked_recipes.values_list('id', flat=True)).order_by('?')
+    allrecipes = Recipe.objects.all()
 
     return render(request, 'recipe/likedRecipes.html', {
         'liked_recipes': liked_recipes,
         'all_recipes': all_recipes,
+        'allrecipes': allrecipes
     })
 
 @login_required

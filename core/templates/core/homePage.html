@@ -15,6 +15,7 @@
                 <div class="row" style="display:flex; justify-content: space-around">Enjoy!</div>
             </div>
     </div>
+     <div class="inline text-center">Number of <i class="bi bi-star-fill text-warning" style="font-size: 1rem"></i> means difficulty of recipe.</div>
 <hr>
     <div class="categories-counter">
     <div class="row">
@@ -39,7 +40,13 @@
                         <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
                   <div class="card-body">
                       <h4 class="card-title text-dark">{{ recipe.name }}</h4>
-
+                    <div class="py-1">
+                      {% for r in recipes %}
+                        {% if forloop.counter <= recipe.difficulty %}
+                             <i class="bi bi-star-fill text-warning" style="font-size: 1rem"></i>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
                       <h5 class="card-subtitle opacity-50 text-dark">{{ recipe.category }}</h5>
                       <p class="card-text text-dark">{{ recipe.description }}</p>
                       <p class="card-footer text-dark"><b>{{ recipe.created_by}}</b>'s recipe!</p>

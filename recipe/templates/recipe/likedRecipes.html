@@ -7,7 +7,7 @@
 {% block content %}
     <div class="px-3">
 
-    <h2 class="py-2">{{ request.user.username }}'s favourite recipes:</h2>
+    <h2 class="py-2"><i>{{ request.user.username }}'s favourite recipes:</i></h2>
 
     <div class="row">
         {% for recipe in liked_recipes %}
@@ -17,7 +17,13 @@
                         <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
                   <div class="card-body">
                       <h4 class="card-title text-dark">{{ recipe.name }}</h4>
-
+                        <div class="py-1">
+                      {% for r in allrecipes %}
+                        {% if forloop.counter <= recipe.difficulty %}
+                             <i class="bi bi-star-fill text-warning" style="font-size: 1rem"></i>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
                       <h5 class="card-subtitle opacity-50 text-dark">{{ recipe.category }}</h5>
                       <p class="card-text text-dark">{{ recipe.description }}</p>
                       <p class="card-footer text-dark"><b>{{ recipe.created_by}}</b>'s recipe!</p>
@@ -40,7 +46,13 @@
                             <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
                       <div class="card-body">
                           <h4 class="card-title text-dark">{{ recipe.name }}</h4>
-
+                            <div class="py-1">
+                      {% for r in allrecipes %}
+                        {% if forloop.counter <= recipe.difficulty %}
+                             <i class="bi bi-star-fill text-warning" style="font-size: 1rem"></i>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
                           <h5 class="card-subtitle opacity-50 text-dark">{{ recipe.category }}</h5>
                           <p class="card-text text-dark">{{ recipe.description }}</p>
                           <p class="card-footer text-dark"><b>{{ recipe.created_by}}</b>'s recipe!</p>

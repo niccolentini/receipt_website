@@ -4,9 +4,10 @@ from .models import Category, Recipe, Comment
 INPUT_CLASS = 'form-control py-2 px-3'
 
 class newRecipeForm(forms.ModelForm):
+    difficulty = forms.ChoiceField(choices=[(i, str(i)) for i in range(1, 6)])
     class Meta:
         model = Recipe
-        fields = ('name', 'description', 'ingredients', 'directions', 'category', 'image')
+        fields = ('name', 'description', 'ingredients', 'directions', 'category','difficulty', 'image')
 
         widgets = {
             'category': forms.Select(attrs={
@@ -35,9 +36,10 @@ class newRecipeForm(forms.ModelForm):
 
 
 class editRecipeForm(forms.ModelForm):
+    difficulty = forms.ChoiceField(choices=[(i, str(i)) for i in range(1, 6)])
     class Meta:
         model = Recipe
-        fields = ('name', 'description', 'ingredients', 'directions', 'image')
+        fields = ('name', 'description', 'ingredients', 'directions', 'difficulty', 'image')
 
         widgets = {
             'name': forms.TextInput(attrs={
