@@ -77,6 +77,63 @@
     </div>
     </div>
 
+    <div class="row">
+    {% if request.user.is_authenticated %}
+        <div class="col-6">
+            <form method="POST" action="." enctype="multipart/form-data">
+                  {% csrf_token %}
+
+                   <div class="p-4 fw-bold">
+                       <h3><b>Leave a comment:</b></h3>
+                       <div class="text-white">{{ form.as_p }}</div>
+                   </div>
+
+                   {% if form.errors or form.non_field_errors %}
+                                    <div class="mb-3 p-4 bg-danger rounded-3">
+                                        {% for field in form %}
+                                            {{ field.errors }}
+                                        {% endfor %}
+                                    {{ form.non_field_errors }}
+                                    </div>
+                   {% endif %}
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success px-3 text-center fw-bold">Leave a comment</button>
+                </div>
+            </form>
+        </div>
+    {% else %}
+        <div class="col-6">
+            <div class="p-4 fw-bold">
+                <a class="login-btn py-1" href="{% url 'core:loginPage' %}">
+                        <button type="button" class="btn btn-outline-primary rounded-5 px-4 ">Login to leave a comment</button>
+                    </a>
+            </div>
+        </div>
+    {% endif %}
+        <div class="col-6 pt-3">
+            <h3><b>Comments:</b></h3>
+            {% for comment in comments %}
+                <div class="card">
+                    <div class="card-header" style="display: flex; flex-direction: row; justify-content: space-between">
+                        <b>{{ comment.user.username }}</b>
+                        <div>{{ comment.date }}</div>
+                    </div>
+                    <div class="card-body" style="display: flex; flex-direction: row; justify-content: space-between">
+                        <i>{{ comment.content }}</i>
+                        {% if request.user == comment.user %}
+                            <a href="{% url 'recipe:deleteComment' comment.id %}" class="delete-btn" title="Delete">
+                                <i class="bi bi-trash text-danger" style="font-size: 1.5rem"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+
         <div class="row pt-5">
         <h4 class="text-center py-2 bg-secondary-subtle"> Others from {{ recipe.category }}...</h4>
             {% for recipe in related_recipes %}

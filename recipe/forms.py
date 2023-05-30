@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category, Recipe
+from .models import Category, Recipe, Comment
 
 INPUT_CLASS = 'form-control py-2 px-3'
 
@@ -57,6 +57,18 @@ class editRecipeForm(forms.ModelForm):
                 'class': INPUT_CLASS,
             }),
             'image': forms.FileInput(attrs={
+                'class': INPUT_CLASS,
+            })
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content',)
+
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'placeholder': 'Write your comment here...',
                 'class': INPUT_CLASS,
             })
         }

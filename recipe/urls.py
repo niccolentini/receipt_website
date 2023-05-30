@@ -10,5 +10,6 @@ urlpatterns = [
     path('<int:pk>/edit/', views.editRecipe, name='editRecipe'),
     path('search/', views.searchRecipe, name='searchRecipe'),
     path('<int:pk>/likeRecipe/', views.likeRecipe, name='likeRecipe'),
-    path('likedRecipes/', views.likedRecipes, name='likedRecipes')
+    path('likedRecipes/', views.likedRecipes, name='likedRecipes'),
+    path('deleteComment/<int:pk>/', views.deleteComment, name='deleteComment')
 ]

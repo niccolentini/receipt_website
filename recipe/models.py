@@ -34,3 +34,13 @@ class LikeRecipe(models.Model):
 
     def __str__(self):
         return self.username
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
+    content = models.TextField(max_length=100)
+
+    def __str__(self):
+        return self.user.username

@@ -5,8 +5,6 @@ from .forms import SignupForm
 from django.contrib.auth import logout
 # Create your views here.
 
-
-
 def homePage(request):
     recipes = Recipe.objects.all().order_by('?')
     categorys = Category.objects.all()
