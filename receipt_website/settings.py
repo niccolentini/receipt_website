@@ -33,6 +33,7 @@ CSRF_TRUSTED_ORIGINS = ['*']
 CORS_ALLOWED_ORIGINS = ['https://web-production-4d50.up.railway.app']
 
 
+
 LOGIN_URL = 'loginPage'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
