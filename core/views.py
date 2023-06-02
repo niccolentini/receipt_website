@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from recipe.models import Category, Recipe
 from .forms import SignupForm
 from django.contrib.auth import logout
+
 # Create your views here.
 
 def homePage(request):
