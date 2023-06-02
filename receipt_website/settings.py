@@ -30,7 +30,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['*']
-CORS_ALLOWED_ORIGINS = ['https://web-production-4d50.up.railway.app']
+CORS_ALLOWED_ORIGINS = ['*']
 
 
 
