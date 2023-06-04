@@ -12,6 +12,7 @@ def detail(request, pk):
     related_recipes = Recipe.objects.filter(category=recipe.category).exclude(pk=pk)[0:4]
     comments = Comment.objects.filter(recipe=recipe).order_by('-date')
     allrecipes = Recipe.objects.all()
+    liked_rec = LikeRecipe.objects.filter(username=request.user.username, recipe_id=pk)
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -32,7 +33,8 @@ def detail(request, pk):
         'related_recipes': related_recipes,
         'form': form,
         'comments': comments,
-        'allrecipes': allrecipes
+        'allrecipes': allrecipes,
+        'liked_rec': liked_rec
     })
 
 
@@ -132,7 +134,6 @@ def deleteComment(request, pk):
     comment = get_object_or_404(Comment, pk=pk, user=request.user)
     recipe_pk = comment.recipe.pk
     comment.delete()
-
 
     return redirect('recipe:detail', pk=recipe_pk)
 

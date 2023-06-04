@@ -51,9 +51,15 @@
 
 
         {% if request.user.is_authenticated %}
-            <a href="{% url 'recipe:likeRecipe' recipe.id %}" class="add-to-fav" title="Add to favourites">
+            {% if liked_rec %}
+                <a href="{% url 'recipe:likeRecipe' recipe.id %}" class="add-to-fav" title="Add to favourites">
                 <i class="bi bi-suit-heart-fill text-danger" style="font-size: 2rem"></i>
             </a>
+                {% else %}
+            <a href="{% url 'recipe:likeRecipe' recipe.id %}" class="add-to-fav" title="Add to favourites">
+                <i class="bi bi-suit-heart text-danger" style="font-size: 2rem"></i>
+            </a>
+                {% endif %}
         {% else %}
             <a class="login-btn py-1" href="{% url 'core:loginPage' %}">
                         <button type="button" class="btn btn-outline-primary rounded-5 px-4 ">Login to like the recipe</button>
