@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_protect
+
 from recipe.models import Category, Recipe
 from .forms import SignupForm
 from django.contrib.auth import logout
+
 
 # Create your views here.
 
@@ -14,9 +17,12 @@ def homePage(request):
         'categorys': categorys,
     })
 
+
 def aboutPage(request):
     return render(request, 'core/aboutPage.html')
 
+
+@csrf_protect
 def signupPage(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -26,17 +32,17 @@ def signupPage(request):
         else:
             form = SignupForm()
 
-
-
     form = SignupForm()
     return render(request, 'core/signupPage.html', {
         'form': form
     })
 
+@csrf_protect
 def logout_view(request):
     if request.method == 'POST':
         logout(request)
         return redirect('core:homePage')
+
 
 def categoryRecipes(request, pk):
     category = Category.objects.get(pk=pk)

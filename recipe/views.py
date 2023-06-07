@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_protect
+
 from .models import Category, Recipe, LikeRecipe, Comment
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -7,6 +9,7 @@ from .forms import newRecipeForm, editRecipeForm, CommentForm
 
 # Create your views here.
 
+@csrf_protect
 def detail(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     related_recipes = Recipe.objects.filter(category=recipe.category).exclude(pk=pk)[0:4]
@@ -37,7 +40,7 @@ def detail(request, pk):
         'liked_rec': liked_rec
     })
 
-
+@csrf_protect
 @login_required
 def addRecipe(request):
     if request.method == 'POST':
@@ -54,7 +57,7 @@ def addRecipe(request):
         'form': form
     })
 
-
+@csrf_protect
 @login_required
 def deleteRecipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk, created_by=request.user)
@@ -62,7 +65,7 @@ def deleteRecipe(request, pk):
 
     return redirect('dashboard:dashboardPage')
 
-
+@csrf_protect
 @login_required
 def editRecipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk, created_by=request.user)
@@ -79,6 +82,7 @@ def editRecipe(request, pk):
         'form': form
     })
 
+@csrf_protect
 def searchRecipe(request):
     query = request.GET.get('query', '')
     recipes = Recipe.objects.all()
@@ -115,6 +119,7 @@ def likeRecipe(request, pk):
         return redirect('/recipes/' + str(recipe_id) + '/')
 
 
+@csrf_protect
 @login_required
 def likedRecipes(request):
     username = request.user.username
@@ -129,6 +134,7 @@ def likedRecipes(request):
         'allrecipes': allrecipes
     })
 
+@csrf_protect
 @login_required
 def deleteComment(request, pk):
     comment = get_object_or_404(Comment, pk=pk, user=request.user)
