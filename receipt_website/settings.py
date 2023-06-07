@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-ku^relw#kytd)7%8!7o(8p!b%p+pd7b@reuab!z07=7)dz6b18
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['https://web-production-4d50.up.railway.app']
+ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://web-production-4d50.up.railway.app']
 CORS_ALLOWED_ORIGINS = ['https://web-production-4d50.up.railway.app']
 CSRF_COOKIE_DOMAIN = 'https://web-production-4d50.up.railway.app'
