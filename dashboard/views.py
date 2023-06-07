@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+
 @login_required
 def dashboardPage(request):
     recipes = Recipe.objects.filter(created_by=request.user)
